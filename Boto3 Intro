@@ -1,0 +1,31 @@
+
+#SDK for accessing AWS Services
+import boto3
+
+#creating AWS session with default profile
+aws_management_console=boto3.session.Session(profile_name="default")
+
+#intiating resource console to access IAM
+resource_console=aws_management_console.resource('iam')
+
+#using FOR loop to print users list
+for each_user in resource_console.users.all():
+    print("Users by Resource Console: ",each_user.name)
+
+#show accessible services using resource
+print("Services accessible by Resource Console: ",aws_management_console.get_available_resources())
+
+#intiating client console to access IAM
+client_console=aws_management_console.client('iam')
+
+#using FOR loop to print users list
+for user in client_console.list_users()['Users']:
+    print("Users by Client Console: ",user['UserName'])
+
+#Usage of pprint
+from pprint import pprint
+print("\n", " I am simple Print: ", client_console.list_users())
+result=client_console.list_users()
+print("\n","Now lets try PPrint: ","\n")
+pprint(result)
+
